@@ -1401,15 +1401,6 @@ function drawScreen() {
         yOffset += boxWidth;
     }
     var fightingOffset = 33;
-    if (showFangames) {
-        drawExtraHeader(lastX, yOffset + fightingOffset * boxWidth, "FANGAMES");
-        drawGame(ii, 2, yOffset + (fightingOffset+1.5) * boxWidth, true);
-        if (easyMode) {
-            yOffset += boxWidth;
-        }
-
-        fightingOffset = 40.5 //39.85 // Update this based on how many new rows are added for fangames
-    }
     if (showFighting) {
         drawExtraHeader(lastX, yOffset + fightingOffset * boxWidth, "FIGHTING");
         drawGame(iamp, 2, yOffset + (fightingOffset + 1.5) * boxWidth, true);
@@ -1426,6 +1417,18 @@ function drawScreen() {
         drawGame(ulil, 2, yOffset + (fightingOffset + 7.5) * boxWidth, true);
         drawGame(aocf, lastX + 2 * boxWidth, yOffset + (fightingOffset + 6.5) * boxWidth, true);
         drawGame(gi, lastX + 2 * boxWidth, yOffset + (fightingOffset + 8.5) * boxWidth, true);
+        if (easyMode) {
+            yOffset += boxWidth;
+        }
+
+        fightingOffset = 45.5
+    }
+    if (showFangames) {
+        drawExtraHeader(lastX, yOffset + fightingOffset * boxWidth, "FANGAMES");
+        drawGame(ii, 2, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        if (easyMode) {
+            yOffset += boxWidth;
+        }
     }
     drawHighlight();
 }
