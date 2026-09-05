@@ -129,7 +129,7 @@ function drawBox(x, y, width = boxWidth, height = boxWidth, lineWidth = 1.0, str
         ctx.strokeRect(x, y, width, height);
     }
 }
-function drawExtraHeader(x, y) {
+function drawExtraHeader(x, y, text) {
     if (ctx) {
         ctx.lineCap = 'butt';
         ctx.lineJoin = 'miter';
@@ -139,7 +139,7 @@ function drawExtraHeader(x, y) {
         ctx.lineTo(0, y);
         ctx.lineTo(canvas.width, y);
         ctx.stroke();
-        drawText("EXTRA", 2, y + 8);
+        drawText(text, 2, y + 8);
     }
 }
 function drawGFWBox(x, y) {
@@ -535,6 +535,16 @@ var udoalg = new Game("UDOALG", "rgba(74, 124, 71, 1.0)", "LHN".split(''), [
 var fw = new Game("FW", "rgba(90, 133, 250, 1.0)", "XLHN".split(''), [
     new Character("R", "Reimu", ["sd", "cr", "sb", "bs", "ys", "im", "bh", "sw"]),
     new Character("M", "Marisa", ["sd", "cr", "sb", "bs", "ys", "im", "bh", "sw"])]);
+
+var ii = new Game("II", "rgba(36, 240, 111, 1.0)", "XLHN".split(''), [
+    new Character("R", "Reimu + Akyuu"),
+    new Character("M", "Marisa + Okina"),
+    new Character("C", "Clownpiece + Junko"),
+    new Character("S", "Seija + Shinmyoumaru"),
+    new Character("A", "Akira + Rola")
+]);
+
+
 var iamp = new Game("IAMP", "rgba(78, 22, 86, 1.0)", "LHN".split(''), [
     new Character("R", "Reimu"),
     new Character("M", "Marisa"),
@@ -917,6 +927,8 @@ function setupControls() {
     bgCheckbox.addEventListener('change', updateBgStatus);
     const fightingCheckbox = document.getElementById('fightingCheckbox');
     fightingCheckbox.addEventListener('change', updateFightingStatus);
+    const fangameCheckbox = document.getElementById('fangameCheckbox');
+    fangameCheckbox.addEventListener('change', updateFangameStatus);
     const easyCheckbox = document.getElementById('easyCheckbox');
     easyCheckbox.addEventListener('change', updateEasyStatus);
     const legendCheckbox = document.getElementById('legendCheckbox');
@@ -935,6 +947,11 @@ function setupControls() {
     if (checkboxValue !== null) {
         showFighting = checkboxValue;
         fightingCheckbox.checked = checkboxValue;
+    }
+    checkboxValue = getCheckboxFromState('fangame');
+    if (checkboxValue !== null) {
+        showFangames = checkboxValue;
+        fangameCheckbox.checked = checkboxValue;
     }
     checkboxValue = getCheckboxFromState('easy');
     if (checkboxValue !== null) {
@@ -1049,24 +1066,36 @@ function updateMisses(e) {
 }
 let transparentPng = true;
 let showFighting = true;
+let showFangames = true;
 let showLegend = true;
 let easyMode = false;
 let showReisen = false;
 let showCompletions = false;
 
 function updateCanvasHeight() {
-    let height = 765;
-    if (!showFighting && !easyMode) {
-        height = 560;
+    let height = 33 * boxWidth; // 561, base height, no easy, up to FW
+
+    if (easyMode) {
+        height += 6 * boxWidth; // 6 extra boxes for easy (because IN adds 2 rows)
     }
-    if (easyMode && !showFighting) {
-        height = 570;
-        height += 5.5 * boxWidth;
+
+    if (showFangames) {
+        height += 1.5 * boxWidth; // header
+        height += 6 * boxWidth; // fangames, no easy
+        if (easyMode) {
+            height += 1 * boxWidth; // 1 extra boxes for easy
+        }
     }
-    if (easyMode && showFighting) {
-        height = 770;
-        height += 7.5 * boxWidth;
+
+    if (showFighting) {
+        height += 1.5 * boxWidth; // header
+        height += 11 * boxWidth; // fighting games, no easy
+        if (easyMode) {
+            height += 2 * boxWidth; // 2 extra boxes for easy
+        }
     }
+
+    // height = 1000 // test
     canvas.height = height;
     canvas.style.height = height + "px";
     if (ctx) {
@@ -1087,6 +1116,12 @@ function updateLegendStatus(e) {
 function updateFightingStatus(e) {
     showFighting = e.target.checked;
     setCheckboxInState('fighting', showFighting);
+    updateCanvasHeight();
+    setCompletion();
+}
+function updateFangameStatus(e) {
+    showFangames = e.target.checked;
+    setCheckboxInState('fangame', showFangames);
     updateCanvasHeight();
     setCompletion();
 }
@@ -1358,12 +1393,22 @@ function drawScreen() {
     if (easyMode) {
         yOffset += boxWidth;
     }
+    var fightingOffset = 33;
+    if (showFangames) {
+        drawExtraHeader(lastX, yOffset + fightingOffset * boxWidth, "FANGAMES");
+        drawGame(ii, 2, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        if (easyMode) {
+            yOffset += boxWidth;
+        }
+
+        fightingOffset = 40.5 //39.85 // Update this based on how many new rows are added for fangames
+    }
     if (showFighting) {
-        drawExtraHeader(lastX, yOffset + 32.35 * boxWidth);
-        drawGame(iamp, 2, yOffset + 33.85 * boxWidth, true);
-        drawGame(swr, lastX + boxWidth, yOffset + 33.85 * boxWidth);
-        drawGame(hsoku, lastX + boxWidth, yOffset + 33.85 * boxWidth);
-        drawGame(hm, lastX + boxWidth, yOffset + 33.85 * boxWidth);
+        drawExtraHeader(lastX, yOffset + fightingOffset * boxWidth, "FIGHTING");
+        drawGame(iamp, 2, yOffset + (fightingOffset + 1.5) * boxWidth, true);
+        drawGame(swr, lastX + boxWidth, yOffset + (fightingOffset + 1.5) * boxWidth);
+        drawGame(hsoku, lastX + boxWidth, yOffset + (fightingOffset + 1.5) * boxWidth);
+        drawGame(hm, lastX + boxWidth, yOffset + (fightingOffset + 1.5) * boxWidth);
         if (easyMode) {
             yOffset += boxWidth;
         }
@@ -1371,9 +1416,9 @@ function drawScreen() {
         if (showReisen) {
             ulil.characters.push(new Character("RS", "Reisen"));
         }
-        drawGame(ulil, 2, yOffset + 39.85 * boxWidth, true);
-        drawGame(aocf, lastX + 2 * boxWidth, yOffset + 38.85 * boxWidth, true);
-        drawGame(gi, lastX + 2 * boxWidth, yOffset + 40.85 * boxWidth, true);
+        drawGame(ulil, 2, yOffset + (fightingOffset + 7.5) * boxWidth, true);
+        drawGame(aocf, lastX + 2 * boxWidth, yOffset + (fightingOffset + 6.5) * boxWidth, true);
+        drawGame(gi, lastX + 2 * boxWidth, yOffset + (fightingOffset + 8.5) * boxWidth, true);
     }
     drawHighlight();
 }
