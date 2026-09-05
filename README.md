@@ -1,2 +1,5 @@
 # 1ccTracker
-A maintained fork of doopu's original 1cc tracker made using canvas graphics. Features all Touhou games 1-20 with all progress saved in local storage. I'll be adding new games as they release and I'm always open to feature suggestions.
+A Fork of DrNeotech and doopu's 1cc tracker. Aims to add many Touhou fangame shmups on top of the existing official games. All progress is saved in local storage. I'm open to fangame suggestions, as I currently only plan on adding the games I've played.
+
+### List of Fangames
+- [Immortal Immanuel](https://store.steampowered.com/app/2861740/__Immortal_Immanuel/)
