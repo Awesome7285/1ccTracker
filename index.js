@@ -536,15 +536,6 @@ var fw = new Game("FW", "rgba(90, 133, 250, 1.0)", "XLHN".split(''), [
     new Character("R", "Reimu", ["sd", "cr", "sb", "bs", "ys", "im", "bh", "sw"]),
     new Character("M", "Marisa", ["sd", "cr", "sb", "bs", "ys", "im", "bh", "sw"])]);
 
-var ii = new Game("II", "rgba(36, 240, 111, 1.0)", "XLHN".split(''), [
-    new Character("R", "Reimu + Akyuu"),
-    new Character("M", "Marisa + Okina"),
-    new Character("C", "Clownpiece + Junko"),
-    new Character("S", "Seija + Shinmyoumaru"),
-    new Character("A", "Akira + Rola")
-]);
-
-
 var iamp = new Game("IAMP", "rgba(78, 22, 86, 1.0)", "LHN".split(''), [
     new Character("R", "Reimu"),
     new Character("M", "Marisa"),
@@ -623,6 +614,44 @@ var gi = new Game("GI", "rgba(131, 5, 5, 1.0)", "HN".split(''), [
     new Character("J", "Joon"),
     new Character("FL", "Flandre", ["a", "b", "c"]),
     new Character("YT", "Yuuma")]);
+
+var ii = new Game("II", "rgba(41, 137, 99, 1.0)", "XLHN".split(''), [
+    new Character("R", "Reimu & Akyuu"),
+    new Character("M", "Marisa & Okina"),
+    new Character("C", "Clownpiece & Junko"),
+    new Character("S", "Seija & Shinmyoumaru"),
+    new Character("A", "Akira & Rola")
+]);
+var cobl = new Game("COBL", "rgba(90, 24, 209, 1.0)", "XLHN".split(''), [
+    new Character("RM", "Reimu & Marisa"),
+    new Character("YY", "Yukari & Yuyuko"),
+    new Character("SK", "Satori & Koishi"),
+    new Character("SM", "Sakuya & Meiling")
+]);
+var dlw = new Game("DLW", "rgba(96, 40, 105, 1.0)", ["ELX", "X", "EAX", "O", "L", "H", "N"], [
+    new Character("DM", "Descent with Modification Team (Reimu & Kasen)"),
+    new Character("AR", "Aesthetic Relativism Team (Marisa & Yuuka)"),
+    new Character("TE", "Theory of Everything Team (Sakuya & Reisen)"),
+    new Character("IV", "Intrinsic and Instrumental Value Team (Sanae & Seija)"),
+    new Character("PN", "Principle of Non-Contradiction Team (Youmu & Koishi)"),
+    new Character("WL", "Written Language Team (Aya & Kosuzu)"),
+]);
+var fff = new Game("FFF", "rgba(248, 80, 132, 1.0)", "HXLHN".split(''), [
+    new Character("RM", "Reimu", ['p', 'l']),
+    new Character("M", "Marisa", ['p', 'l']),
+    new Character("SK", "Sakuya", ['p', 'l']),
+    new Character("SN", "Sanae", ['p', 'l']),
+    new Character("YO", "Youmu", ['p', 'l']),
+    new Character("YU", "Yuuka", ['p', 'l']),
+    new Character("RS", "Reisen", ['p', 'l']),
+]);
+var hsob = new Game("HSOB", "rgba(255, 207, 53, 1.0)", "XLHN".split(''), [
+    new Character("R", "Reimu", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
+    new Character("M", "Marisa", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
+    new Character("S", "Sakuya", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
+    new Character("K", "Kaguya", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
+
+]);
 let lastX = 0;
 let lastY = 0;
 
@@ -1081,10 +1110,11 @@ function updateCanvasHeight() {
 
     if (showFangames) {
         height += 1.5 * boxWidth; // header
-        height += 6 * boxWidth; // fangames, no easy
+        height += 12 * boxWidth; // fangames, no easy
         if (easyMode) {
-            height += 1 * boxWidth; // 1 extra boxes for easy
+            height += 2 * boxWidth; // 1 extra boxes for easy
         }
+        height += 3 * boxWidth; // dlw
     }
 
     if (showFighting) {
@@ -1419,6 +1449,13 @@ function drawScreen() {
     if (showFangames) {
         drawExtraHeader(lastX, yOffset + fightingOffset * boxWidth, "FANGAMES");
         drawGame(ii, 2, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        drawGame(cobl, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        drawGame(dlw, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        drawGame(fff, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        if (easyMode) {
+            yOffset += boxWidth;
+        }
+        drawGame(hsob, 2, yOffset + (fightingOffset+10.5) * boxWidth, true);
         if (easyMode) {
             yOffset += boxWidth;
         }
