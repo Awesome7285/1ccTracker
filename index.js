@@ -646,7 +646,7 @@ var fff = new Game("FFF", "rgba(248, 80, 132, 1.0)", "HXLHN".split(''), [
     new Character("YU", "Yuuka", ['p', 'l']),
     new Character("RS", "Reisen", ['p', 'l']),
 ]);
-var hsob = new Game("HSOB", "rgba(255, 207, 53, 1.0)", "XLHN".split(''), [
+var hsob = new Game("HSOB", "rgba(255, 207, 53, 1.0)", ["X", "EX", "L", "H", "N"], [
     new Character("R", "Reimu", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
     new Character("M", "Marisa", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
     new Character("S", "Sakuya", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
