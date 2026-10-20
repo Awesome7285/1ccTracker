@@ -653,6 +653,13 @@ var hsob = new Game("HSOB", "rgba(255, 207, 53, 1.0)", ["X", "EX", "L", "H", "N"
     new Character("K", "Kaguya", ['re', 'or', 'ye', 'gr', 'aq', 'bl', 'pu', 'bk', 'wh']),
 
 ]);
+var sohw = new Game("SOHW", "rgba(255, 140, 0, 1.0)", ["LX", "X", "EX", "L", "H", "N"], [
+    new Character("RE", "Reimu", ['a', 'b']),
+    new Character("M", "Marisa", ['a', 'b']),
+    new Character("S", "Sanae", ['a', 'b']),
+    new Character("RY", "Ryouko", ['a', 'b']),
+
+]);
 let lastX = 0;
 let lastY = 0;
 
@@ -1113,7 +1120,7 @@ function updateCanvasHeight() {
 
     if (showFangames) {
         height += 1.5 * boxWidth; // header
-        height += 12 * boxWidth; // fangames, no easy
+        height += 13 * boxWidth; // fangames, no easy
         if (easyMode) {
             height += 2 * boxWidth; // 1 extra boxes for easy
         }
@@ -1459,6 +1466,7 @@ function drawScreen() {
         drawGame(cobl, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
         drawGame(dlw, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
         drawGame(fff, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
+        drawGame(sohw, lastX + 2 * boxWidth, yOffset + (fightingOffset+1.5) * boxWidth, true);
         if (easyMode) {
             yOffset += boxWidth;
         }

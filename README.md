@@ -6,4 +6,5 @@ A Fork of DrNeotech and doopu's 1cc tracker. Aims to add many Touhou fangame shm
 - [Chaos of Black Loong](https://store.steampowered.com/app/915130)
 - [Dream Logical World](https://store.steampowered.com/app/1664410/__Dream_Logical_World/)
 - [Frantically Forbidden Fruit](https://en.touhouwiki.net/wiki/Frantically_Forbidden_Fruit)
+- [Servants of Harvest Wish](https://store.steampowered.com/app/1351170/__Servants_of_Harvest_Wish/)
 - [Hollow Song of Birds](https://en.touhouwiki.net/wiki/Hollow_Song_of_Birds)
